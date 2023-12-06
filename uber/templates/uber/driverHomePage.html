@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+</head>
+<body>
+
+{% extends 'uber/base.html' %}
+{% block body %}
+
+    <div class="topnav">
+        <a href="#">HOME</a>
+        <a href="#" style="float: right;">{{ driverInfo.1 }}</a>
+        <a href="#" style="float:right">LOG OUT</a>
+    </div>
+
+    <br> <br> <br>
+
+    <section id = "forForm">
+
+    {% if data %}
+
+        <p> You have an ongoing ride</p>
+
+                <h4> Ride Info: </h4>
+
+                <p style="font-size: 100%; font-weight: bolder;"> From:</p>
+                {% if data.10.0 %}
+                    <p>STREET: {{ data.10.0 }}</p>
+                {% endif %}
+                <p> CITY: {{ data.10.1 }}</p>
+
+
+                <p style="font-size: 100%; font-weight: bolder;"> Destination:</p>
+                {% if data.11.0 %}
+                    <p>STREET: {{ data.11.0 }}</p>
+                {% endif %}
+                <p> CITY: {{ data.11.1 }}</p>
+
+
+                <p style="font-size: 100%; font-weight: bolder;"> Approximate Fare: {{ data.5 }}</p>
+                <details>
+                    <summary>Show User Info</summary>
+                    <p>Name: {{ data.9.1 }}</p>
+                    {% if data.9.8 %}
+                        <p>Rating: {{ data.9.7 }} / {{ data.9.8 }}</p>
+                    {% else %}
+                        <p>New User</p>
+                    {% endif %}
+                    <p> Mobile Number(s): </p>
+                    {% for num in data.9.12 %}
+                        <p>{{ num }}</p>
+                    {% endfor %}
+                </details>
+
+    {% else %}
+
+        {% if requestData %}
+            <h3>Ride requests: </h3>
+            {% for data in requestData %}
+                <h4> Ride Info {{ forloop.counter}}: </h4>
+
+                <p style="font-size: 100%; font-weight: bolder;"> From:</p>
+                {% if data.10.0 %}
+                    <p>STREET: {{ data.10.0 }}</p>
+                {% endif %}
+                <p> CITY: {{ data.10.1 }}</p>
+
+
+                <p style="font-size: 100%; font-weight: bolder;"> Destination:</p>
+                {% if data.11.0 %}
+                    <p>STREET: {{ data.11.0 }}</p>
+                {% endif %}
+                <p> CITY: {{ data.11.1 }}</p>
+
+
+                <p style="font-size: 100%; font-weight: bolder;"> Approximate Fare: {{ data.5 }}</p>
+                <details>
+                    <summary>Show User Info</summary>
+                    <p>Name: {{ data.9.1 }}</p>
+                    {% if data.9.8 %}
+                        <p>Rating: {{ data.9.7 }} / {{ data.9.8 }}</p>
+                    {% else %}
+                        <p>New User</p>
+                    {% endif %}
+                    <p> Mobile Number(s): </p>
+                    {% for num in data.9.12 %}
+                        <p>{{ num }}</p>
+                    {% endfor %}
+                </details>
+                <form action= "{% url 'uber:acceptRequest' data.0 driverInfo.0 %}" method ="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Respond">
+                </form>
+                <hr style="height: 10px; background: #000;">
+
+
+            {% endfor %}
+        {% else %}
+            <p> There is no ride request!</p>
+        {% endif %}
+
+    {% endif %}
+    </section>
+
+{% endblock %}
+
+</body>
+</html>

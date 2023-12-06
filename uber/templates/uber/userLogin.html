@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+</head>
+<body onload="reset()">
+
+{% extends 'uber/base.html' %}
+{% block body %}
+
+     <div class = "topnav">
+        <a href="{%  url 'uber:index' %}">HOME</a>
+    </div>
+    <br><br><br>
+
+    <section id = "forForm">
+        <h3 align="center">LOG IN FORM</h3>
+
+    {% if errorLst %}
+        {% for error in errorLst %}
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+
+
+        <form action="{% url 'uber:userLogin' %}" method="post">
+            {% csrf_token %}
+            <label id = "label1" for="userName">Username:</label>
+                {% if errorLst %}
+                    <input type = "text" name="userName" id = "userName" value = "{{ inputLst.0 }}" required>
+                {% else %}
+                    <input type = "text" name="userName" id = "userName1" required>
+                {% endif %}
+            <br>
+
+            <label> Password:
+                {% if errorLst %}
+                    <input type = "password" name="passWord" value = "{{ inputLst.1 }}" required>
+                {% else %}
+                    <input type = "password" name="passWord" required>
+                {% endif %}
+            </label>
+            <br>
+            <label id="label2">Use mobile number to log in</label>
+            <input type = "checkbox" id = "check1" onclick="Flip()">
+            <br>
+
+            <input type = "submit" value="Log In">
+
+        </form>
+    </section>
+
+
+
+    <script type="text/javascript">
+        function Flip() {
+            var labelText1 = document.getElementById("label1").textContent;
+            if (labelText1 == "Username:") {
+
+                document.getElementById("label1").textContent = "Mobile Number:";
+
+                {% if errorLst %}
+                    document.getElementById("userName").setAttribute('name', 'mobileNumber');
+                {% else %}
+                    document.getElementById("userName1").setAttribute('name', 'mobileNumber');
+                {% endif %}
+            }
+            else {
+                document.getElementById("label1").textContent="Username:";
+                {% if errorLst %}
+                    document.getElementById("userName").setAttribute('name', 'userName');
+                {% else %}
+                    document.getElementById("userName1").setAttribute('name', 'userName');
+                {% endif %}
+            }
+
+        }
+
+        function reset() {
+            {% if asUser == "mobileNumber" %}
+                document.getElementById("label1").textContent="Mobile Number:";
+                document.getElementById("check1").checked = true;
+                {% if errorLst %}
+                    document.getElementById("userName").setAttribute('name', 'mobileNumber');
+                {% else %}
+                    document.getElementById("userName1").setAttribute('name', 'mobileNumber');
+                {% endif %}
+
+            {% else %}
+
+                document.getElementById("label1").textContent="Username:";
+                document.getElementById("check1").checked = false;
+                {% if errorLst %}
+                    document.getElementById("userName").setAttribute('name', 'userName');
+                {% else %}
+                    document.getElementById("userName1").setAttribute('name', 'userName');
+                {% endif %}
+
+            {% endif %}
+
+        }
+
+    </script>
+{% endblock %}
+
+</body>
+</html>

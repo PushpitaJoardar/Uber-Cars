@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <style type="text/css">
+        label, input {
+            margin-left: 40%;
+        }
+        input[type=submit] {
+            margin-left: 60%;
+        }
+        #pickUP {
+            display: inline-block;
+
+            margin-right: 5%;
+            width: 40%;
+        }
+        #dest{
+            display: inline-block;
+            width: 40%;
+        }
+
+    </style>
+</head>
+<body>
+
+
+{% extends 'uber/base.html' %}
+{% block body %}
+
+    <div class="topnav">
+        <a href="#">HOME</a>
+        <a href="#" style="float: right;"> {{ userInfo.1 }}</a>
+        <a href="#" style="float: right;">LOG OUT</a>
+
+    </div>
+    <br><br><br>
+
+    <section id="forForm">
+    <form style="float: right;" action="{% url 'uber:userHomePage' userInfo.0 %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Refresh">
+    </form>
+
+    {% if requestData %}
+
+        <h2 align="center"> Ride Info: </h2>
+
+        <p style="font-size: 150%; font-weight: bolder;"> From:</p>
+        {% if requestData.9.0 %}
+            <p>STREET: {{ requestData.9.0 }}</p>
+        {% endif %}
+        <p> CITY: {{ requestData.9.1 }}</p>
+
+
+        <p style="font-size: 150%; font-weight: bolder;"> Destination:</p>
+        {% if requestData.10.0 %}
+            <p>STREET: {{ requestData.10.0 }}</p>
+        {% endif %}
+        <p> CITY: {{ requestData.10.1 }}</p>
+
+
+        <p style="font-size: 150%; font-weight: bolder;"> Approximate Fare: {{ requestData.5 }}</p>
+        <br>
+
+        {% if riderInfo %}
+            <p> We have got a rider for you!</p>
+            <details>
+                    <summary>Show Rider Info</summary>
+                    <p>Name: {{ riderInfo.1 }} {{ riderInfo.2 }} {{ riderInfo.3 }}</p>
+                    {% if riderInfo.8 %}
+                        <p>Rating: {{ riderInfo.7 }} / {{ riderInfo.8 }}</p>
+                    {% else %}
+                        <p>New User</p>
+                    {% endif %}
+                    <p> Mobile Number(s): </p>
+                    {% for num in riderInfo.12 %}
+                        <p>{{ num }}</p>
+                    {% endfor %}
+                </details>
+        {% else %}
+            <p>Please wait until we find a rider for you!</p>
+
+        {% endif %}
+
+    {% else %}
+        <h2 align="center"> Need a ride?</h2>
+        {% for error in errorLst %}
+            <p>{{ error }}</p>
+        {% endfor %}
+
+        <form action="{% url 'uber:newRequest' userInfo.0 %}" method="post">
+            {% csrf_token %}
+            <div id = "pickUP">
+            <label> Pick up point: <br> <br>
+                <label> Street:
+                    {% if errorLst %}
+                        <input type="text" name="street1" value="{{ pickupLoc.0 }}">
+                    {% else %}
+                        <input type = "text" name ="street1">
+                    {% endif %}
+                </label>
+                <label> City:
+                    {% if errorLst %}
+                        <input type = "text" name="city1" value="{{ pickupLoc.1 }}" required>
+                    {% else %}
+                        <input type="text" name="city1" required>
+                    {% endif %}
+                </label>
+                <label> Postal Code:
+                    <input type="text" name="postCode1" disabled>
+                </label>
+            </label>
+
+
+            </div>
+            <div id = "dest">
+            <label> Destination: <br> <br>
+                <label> Street:
+                    {% if errorLst %}
+                        <input type="text" name="street2" value="{{ destLoc.0 }}">
+                    {% else %}
+                        <input type = "text" name ="street2">
+                    {% endif %}
+                </label>
+                <label> City:
+                    {% if errorLst %}
+                        <input type = "text" name="city2" value="{{ destLoc.1 }}" required>
+                    {% else %}
+                        <input type="text" name="city2" required>
+                    {% endif %}
+                </label>
+                <label> Postal Code:
+                    <input type="text" name="postCode2" disabled>
+                </label>
+
+            </label>
+
+            </div>
+            <br><br> <br>
+             <input align="center" style="margin-left: 30%;" type ="submit" value = "Submit Request">
+
+        </form>
+
+    {% endif %}
+    </section>
+
+
+{% endblock %}
+
+</body>
+</html>

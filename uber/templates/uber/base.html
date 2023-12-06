@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% block Style %}
+        <style type="text/css">
+
+            body {
+                background: #FDFDFE;
+            }
+
+            .topnav {
+                background: #5dd4ee;
+                overflow: hidden;
+            }
+
+            .topnav a {
+                float: left;
+                color: #000;
+                text-align: center;
+                padding: 15px 15px;
+                text-decoration: none;
+
+                font-size: 150%;
+                font-family: sans-serif;
+                font-weight: bold;
+            }
+
+            .topnav a:hover {
+                background: #333;
+                color: #f2f2f2;
+            }
+
+            header{
+                text-align: center;
+            }
+
+            #forForm {
+                display: block;
+                border: 1px solid black;
+                font-size: 125%;
+                background: #c1c8d4;
+            }
+
+            #forForm input {
+                display: block;
+            }
+
+            #forForm input[type=submit] {
+                font-size: 120%;
+                border-radius: 5px;
+                background: #5dd4ee;
+                display: block;
+
+
+            }
+
+            #forForm input[type=submit]:hover {
+                background-color: #333333;
+                color:#FFF;
+            }
+
+        </style>
+    {% endblock %}
+
+</head>
+<body>
+
+    {% comment %}<header>
+        <h1 style="margin-bottom: 5px; margin-top:5px; font-family: sans-serif;">UBER</h1>
+    </header>{% endcomment %}
+
+
+{% block body%}
+{% endblock %}
+
+</body>
+</html>

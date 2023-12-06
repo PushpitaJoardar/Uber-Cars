@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Sign Up</title>
+
+</head>
+<body>
+
+{% extends 'uber/base.html' %}
+
+
+{% block body %}
+
+     <div class = "topnav">
+        <a href="{%  url 'uber:index' %}">HOME</a>
+    </div>
+    <br><br><br>
+
+    <section id="forForm">
+
+
+        {% if errorLst %}
+            {% for error in errorLst %}
+                {% if error %}
+                    <p> {{ error }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
+        <section id = "signUp">
+
+            <form action = "{% url 'uber:userSignUp' %}" method="post">
+                {% csrf_token %}
+                <label> First Name:
+                    {% if errorLst %}
+                        <input type = "text" name="firstName" value = "{{ inputLst.0 }}" required>
+                    {% else %}
+                        <input type = "text" name="firstName" required>
+                    {% endif %}
+
+                </label>
+                <label> Middle Name:
+                    {% if errorLst %}
+                        <input type = "text" name="middleName" value = "{{ inputLst.1 }}">
+                    {% else %}
+                        <input type = "text" name="middleName">
+                    {% endif %}
+                </label>
+                <label> Last Name:
+                    {% if errorLst %}
+                        <input type = "text" name="lastName" value = "{{ inputLst.2 }}">
+                    {% else %}
+                        <input type = "text" name="lastName">
+                    {% endif %}
+                </label>
+
+                <label>Username:
+                    {% if errorLst %}
+                        <input type = "text" name="userName" value = "{{ inputLst.3 }}" required>
+                    {% else %}
+                        <input type = "text" name="userName" required>
+                    {% endif %}
+                </label>
+
+                <label> Password:
+                    {% if errorLst %}
+                        <input type = "password" name="passWord" value = "{{ inputLst.4 }}" required>
+                    {% else %}
+                        <input type = "password" name="passWord" required>
+                    {% endif %}
+                </label>
+
+                <label> Mobile Number:
+                    {% if errorLst %}
+                        <input type = "text" name="mobileNumber" value = "{{ inputLst.5 }}" required>
+                    {% else %}
+                        <input type = "text" name="mobileNumber" required>
+                    {% endif %}
+                </label>
+
+                <label> Email:
+                    {% if errorLst %}
+                        <input type = "email" name="email" value = "{{ inputLst.6 }}" required>
+                    {% else %}
+                        <input type = "email" name="email" required>
+                    {% endif %}
+                </label>
+
+                <label> Date of Birth:
+                    {% if errorLst %}
+                        <input type = "date" name="birthDay" value = "{{ inputLst.7 }}" required>
+                    {% else %}
+                        <input type = "date" name="birthDay" required>
+                    {% endif %}
+                </label>
+                <label> Street:
+                    {% if errorLst %}
+                        <input type = "text" name="street" value = "{{ inputLst.8 }}">
+                    {% else %}
+                        <input type = "text" name="street">
+                    {% endif %}
+                </label>
+                <label> City:
+                    {% if errorLst %}
+                        <input type = "text" name="city" value = "{{ inputLst.9 }}" required>
+                    {% else %}
+                        <input type = "text" name="city" required>
+                    {% endif %}
+                </label>
+                <label> Postal Code:
+                    {% if errorLst %}
+                        <input type = "text" name="postCode" value = "{{ inputLst.10 }}">
+                    {% else %}
+                        <input type = "text" name="postCode">
+                    {% endif %}
+                </label>
+
+
+                <input type ="submit" id="submit" value="Sign Up">
+
+
+            </form>
+
+        </section>
+    </section>
+
+{% endblock %}
+
+</body>
+</html>

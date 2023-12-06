@@ -1,0 +1,77 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>UBER</title>
+
+
+</head>
+<body>
+
+{% extends 'uber/base.html' %}
+
+
+{% block body %}
+
+     <div class = "topnav">
+        <a href="{%  url 'uber:index' %}">HOME</a>
+    </div>
+    <br><br><br>
+
+    <section id="forForm">
+
+        <div style="margin-left: 30%;">
+
+        <p> I am a
+            <label> User <input type = "radio" name = "userType" id = "useR" checked> </label>
+            <label> Driver <input type = "radio" name = "userType" id = "driveR"> </label>
+        </p>
+        </div>
+        <br>
+
+
+
+        <section id = "forUser" onsubmit="RadioValue()">
+
+            <form action = "" method="get" id="logIN">
+                {% csrf_token %}
+                <input style="display: inline-block;margin-left: 40%;" type = "submit" value = "Log In" id = "lInput">
+
+            </form>
+
+        </section>
+
+        <br><br>
+
+        <section id = "forDriver" onsubmit="RadioValue()">
+
+            <form action = "" method="get" id="signUP">
+                {% csrf_token %}
+                <input style="display: inline-block; margin-left: 40%;"type = "submit" value = "Sign Up" id = "sInput">
+
+            </form>
+
+        </section>
+    </section>
+
+
+	<script type="text/javascript">
+		function RadioValue() {
+			if(document.getElementById("useR").checked) {
+				document.getElementById("logIN").action = "{% url 'uber:userLogin' %}";
+				document.getElementById("signUP").action = "{% url 'uber:userSignUp' %}";
+			}
+			else if (document.getElementById("driveR").checked) {
+				document.getElementById("logIN").action = "{% url 'uber:driverLogin' %}";
+				document.getElementById("signUP").action = "{% url 'uber:driverSignUp' %}";
+			}
+		}
+		
+	</script>
+
+{% endblock %}
+
+</body>
+</html>
