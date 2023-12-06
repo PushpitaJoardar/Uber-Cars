@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>practice</title>
+</head>
+<body>
+
+<label for="image">Input Image</label>
+<input id = "image" type = "image" src="" alt="submit" style="float: right" width="50" height="50">
+
+ <!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Google Map</h1>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ93UjO-914FKZxH_QwZkZyuqAlqOk4a0&callback=myMap"></script>
+
+</body>
+</html>
+
+<label id = "label1" for="check1">Check</label>
+        <input type = "checkbox" id ="check1" onclick="MissMe()">
+
+    <script type="text/javascript">
+        function MissMe() {
+            console.log(document.getElementById("label1").innerText);
+            console.log(document.getElementById("label1").textContent);
+            if (document.getElementById("label1").textContent == "Check") {
+                document.write("Hello Wrold");
+            }
+            else {
+                document.write("Nto");
+            }
+
+        }
+    </script>
+
+</body>
+</html>
